@@ -1,81 +1,63 @@
-<!--
-   Todolist: Creiamo un variabile con un array di array di todo da fare.
-   Ogni todo avrà un messaggio e un boolean (completato e non completato).
-   Se è completato lo stilerete in modo diverso (tipo disabled), con tutte le
-   nozioni che abbiamo visto oggi. In jQuery poi interverremo su ogni todo
-   per completarlo lato client.
--->
-
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" type="text/css" href="css/style.css">
       <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-      <title>Todo List</title>
+      <script src="js/Chart.js"></script>
+      <title>Dashboard</title>
    </head>
    <body>
 
-      <?php
+      <main>
 
-         $todo_items = [
-            [
-               'msg' => 'fare spesa',
-               'done' => 'false'
-            ],
-            [
-               'msg' => 'pulire',
-               'done' => 'true'
-            ],
-            [
-               'msg' => 'appuntamento ore 16',
-               'done' => 'false'
-            ],
-            [
-               'msg' => 'guarda Peaky Blonders',
-               'done' => 'false'
-            ],
-            [
-               'msg' => 'Chiama Tizio',
-               'done' => 'false'
-            ],
-            [
-               'msg' => 'Vai da Caio',
-               'done' => 'false'
-            ],
-         ];
+         <div class="chart-container">
+            <canvas id="annual-sales" width="400" height="400"></canvas>
+         </div>
 
-         //var_dump($todo_items);die();
-      ?>
+      </main>
 
-      <div class="container">
+      <script type="text/javascript">
 
-         <?php
-            foreach ($todo_items as $todo_item) {
-         ?>
+         <?php include 'data.php' ?>
 
-         <?php
-               if ($todo_item['done'] == 'false') {
-                  $class = 'active';
-                  $button_state = 'btn-active';
-               }  else {
-                     $class = 'done';
-                     $button_state = 'disabled';
-                  }
-         ?>
+         $(document).ready(function(){
+            var chart_context = $('#annual-sales');
 
-               <div class="item <?php echo $class; ?>">
-                  <h2> <?php echo ucfirst($todo_item['msg']); ?></h2>
-                  <button class="btn <?php echo $button_state; ?>" type="button" name="button">Done</button>
-               </div>
+            var chart_data = <?php echo json_encode($data) ?>;
+            var chart_labels = <?php echo json_encode($labels) ?>;
 
-         <?php
-            }
-         ?>
+            var myChart = new Chart( chart_context, chart_config('line', chart_labels, chart_data, 'Vendite Mensili', 'rgba(22, 59, 213, 0.65)', 'rgba(0, 37, 190, 1)' ) );
 
-      </div>
+
+
+
+
+            //chart_config riceve come parametri il tipo di grafico, le labels e i dati da mostrare.
+            //Crea e restituisce l'oggetto richiesto da Chart.js per creare il grafico
+            function chart_config(chart_type, chart_labels, chart_data, chart_title, mainColor, secondaryColor ) {
+
+            var c_config = {
+
+               type: chart_type,
+               data: {
+                  labels: chart_labels,
+                  datasets: [{
+                     label: chart_title,
+                     data: chart_data,
+                     backgroundColor: mainColor,
+                     borderColor: secondaryColor,
+                  }]
+               }
+
+            };
+
+            return c_config;
+         }
+
+         });
+
+      </script>
 
       <script type="text/javascript" src="js/main.js"></script>
    </body>
