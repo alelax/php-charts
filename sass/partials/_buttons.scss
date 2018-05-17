@@ -1,0 +1,23 @@
+$btn_dimensions : 60px;
+
+.btn {
+   width: $btn_dimensions;
+   height: $btn_dimensions;
+   border-radius: 15px;
+   color: white;
+   font-weight: 600;
+
+   &.btn-active {
+      background-color: $clr_btn_active;
+      border: $border_width solid $clr_btn_brd_active;
+      cursor: pointer;
+
+   }
+
+   &.disabled {
+      background-color: $clr_btn_disabled;
+      border: $border_width solid $clr_btn_brd_disabled;
+      pointer-events: none;
+   }
+
+}
