@@ -8,17 +8,27 @@
 main {
   width: 100%;
   height: 100vh;
-  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .chart-container {
-  float: left;
-  width: 650px;
+  min-width: 45%;
   height: auto;
-  position: relative;
-  padding: 20px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+}
+
+.denied {
+  color: #da1f0c;
+  font-size: 15vh;
+  margin: 42.5vh auto;
 }
 
